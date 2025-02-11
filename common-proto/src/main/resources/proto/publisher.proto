@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package publisher;
+
+option java_multiple_files = true;
+option java_package = "com.proto.publisher";
+option java_outer_classname = "PublisherProto";
+
+service PublisherService {
+  rpc GetPublisher (PublisherRequest) returns (PublisherResponse);
+}
+
+message PublisherRequest {
+  string publisher_id = 1;
+}
+
+message PublisherResponse {
+  string id = 1;   string name = 2;
+  string logo_file_url = 3;
+  AddressInfo address_info = 4;
+  ContactInfo contact_info = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  string deleted_at = 8;
+}
+
+message AddressInfo {
+  string address = 1;
+  double lat = 2;
+  double lng = 3;
+}
+
+message ContactInfo {
+  repeated string emails = 1;
+  repeated string phone_numbers = 2;
+  repeated string instagram_accounts = 3;
+}

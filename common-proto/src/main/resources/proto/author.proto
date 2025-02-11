@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package author;
+
+option java_multiple_files = true;
+option java_package = "com.proto.author";
+option java_outer_classname = "AuthorProto";
+
+service AuthorService {
+  rpc GetAuthor (AuthorRequest) returns (AuthorResponse);
+}
+
+message AuthorRequest {
+  string author_id = 1;
+}
+
+message AuthorResponse {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string nsid = 4;
+  string birth_date = 5;
+  ContactInfo contact_info = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+}
+
+message ContactInfo {
+  repeated string emails = 1;
+  repeated string phone_numbers = 2;
+  repeated string instagram_accounts = 3;
+}

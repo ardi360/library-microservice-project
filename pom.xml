@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.golrang</groupId>
+    <artifactId>library-project</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eureka-server</module>
+        <module>config-server</module>
+        <module>api-gateway</module>
+        <module>author-service</module>
+        <module>book-service</module>
+        <module>publisher-service</module>
+        <module>library-service</module>
+		<module>common-proto</module>
+    </modules>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>golrang-code-challenge-project</name>
+
+    <developers>
+        <developer>
+            <id>ardalanzahiri</id>
+            <name>ardalan-zahiri</name>
+            <email>ardalanzahiri@gmail.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.maven.plugin.version>3.3.1</spring.boot.maven.plugin.version>
+        <spring.boot.dependencies.version>3.3.1</spring.boot.dependencies.version>
+        <spring.cloud-version>2023.0.2</spring.cloud-version>
+        <spring.application.name>${project.artifactId}</spring.application.name>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+			<scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <!--                    version 3.4.3 is buggy and stuck on 80% docker build image to docker daemon process-->
+                    <version>3.4.0</version>
+                    <configuration>
+                        <from>
+                            <image>eclipse-temurin:21</image>
+                        </from>
+                        <to>
+                            <image>${project.artifactId}:${project.version}</image>
+                        </to>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <!--                            using dockerBuild goal instead of default build goal for preventing deploy on remote repository and getting 401 Unauthorized-->
+                            <goals>
+                                <goal>dockerBuild</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

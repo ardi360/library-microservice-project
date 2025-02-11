@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: docker.arvancloud.ir/postgres:17.2
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend
+    restart: unless-stopped
+
+  mongodb:
+    image: docker.arvancloud.ir/mongo:8.0
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  mongodb-data:
+
+networks:
+  backend:
+    driver: bridge

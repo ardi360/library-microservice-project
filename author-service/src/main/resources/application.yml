@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ${project.artifactId}
+  profiles:
+    active: dev
+  #    using optional for now to boot up application developing process, in the end, optional will be removed
+  config:
+    import: optional:configserver:http://localhost:8090
