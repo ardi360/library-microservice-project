@@ -1,2 +1,8 @@
 server:
   port: 8015
+
+grpc:
+  client:
+    bookService:
+      address: 'static://127.0.0.1:6285'
+      negotiation-type: plaintext

@@ -19,14 +19,14 @@ public class GeneralExceptionHandler {
     @ResponseBody
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<BaseResponse> generalExceptionHandler(IllegalArgumentException illegalArgumentException) {
-        log.error("illegalArgumentException Exception Raised and Caught By ControllerAdvice: " + illegalArgumentException.getMessage());
+        log.error("illegalArgumentException Exception Raised and Caught By ControllerAdvice: " + illegalArgumentException.getCause().getMessage());
         return ResponseEntity.badRequest().body(BaseResponse.builder().resultStatus(ResultStatus.BAD_INPUT).build());
     }
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse> generalExceptionHandler(Exception exception) {
-        log.error("internal server Exception Raised and Caught By ControllerAdvice: " + exception.getMessage());
+        log.error("internal server Exception Raised and Caught By ControllerAdvice: " + exception.getCause().getMessage());
         return ResponseEntity.internalServerError().body(BaseResponse.builder().resultStatus(ResultStatus.INTERNAL_ERROR).build());
     }
 }

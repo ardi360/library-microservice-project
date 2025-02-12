@@ -13,10 +13,14 @@ spring:
         format_sql: true
         default_schema: test
 grpc:
+
+  server:
+    port: 6285
   client:
     authorService:
       address: 'static://127.0.0.1:5265'
       negotiation-type: plaintext
+      enable-keep-alive:
     publisherService:
       address: 'static://127.0.0.1:5275'
       negotiation-type: plaintext

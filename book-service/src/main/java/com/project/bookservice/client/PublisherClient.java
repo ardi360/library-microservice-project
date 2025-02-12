@@ -1,13 +1,15 @@
-package com.project.bookservice.service;
+package com.project.bookservice.client;
 
 import com.proto.publisher.PublisherRequest;
 import com.proto.publisher.PublisherResponse;
 import com.proto.publisher.PublisherServiceGrpc;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PublisherFetchService {
+@Lazy
+public class PublisherClient {
     @GrpcClient("publisherService")
     private PublisherServiceGrpc.PublisherServiceBlockingStub publisherServiceBlockingStub;
 
