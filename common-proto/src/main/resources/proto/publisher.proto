@@ -7,11 +7,16 @@ option java_package = "com.proto.publisher";
 option java_outer_classname = "PublisherProto";
 
 service PublisherService {
-  rpc GetPublisher (PublisherRequest) returns (PublisherResponse);
+  rpc GetPublisherById (GetPublisherByIdRequest) returns (PublisherResponse);
+  rpc GetPublisherByName (GetPublisherByNameRequest) returns (PublisherResponse);
 }
 
-message PublisherRequest {
+message GetPublisherByIdRequest {
   string publisher_id = 1;
+}
+
+message GetPublisherByNameRequest {
+  string name = 1;
 }
 
 message PublisherResponse {

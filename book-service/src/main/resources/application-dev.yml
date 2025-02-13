@@ -13,7 +13,6 @@ spring:
         format_sql: true
         default_schema: test
 grpc:
-
   server:
     port: 6285
   client:

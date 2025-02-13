@@ -1,4 +1,4 @@
-package com.project.bookservice.domain;
+package com.project.libraryservice.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

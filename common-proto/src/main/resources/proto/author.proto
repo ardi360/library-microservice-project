@@ -7,11 +7,16 @@ option java_package = "com.proto.author";
 option java_outer_classname = "AuthorProto";
 
 service AuthorService {
-  rpc GetAuthor (AuthorRequest) returns (AuthorResponse);
+  rpc GetAuthorById (GetAuthorByIdRequest) returns (AuthorResponse);
+  rpc GetAuthorByNsid (GetAuthorByNsidRequest) returns (AuthorResponse);
 }
 
-message AuthorRequest {
+message GetAuthorByIdRequest {
   string author_id = 1;
+}
+
+message GetAuthorByNsidRequest {
+  string nsid = 1;
 }
 
 message AuthorResponse {

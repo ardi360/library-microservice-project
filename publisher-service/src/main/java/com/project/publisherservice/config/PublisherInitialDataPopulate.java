@@ -1,9 +1,10 @@
-package com.project.publisherservice;
+package com.project.publisherservice.config;
 
 import com.project.publisherservice.domain.AddressInfo;
 import com.project.publisherservice.domain.ContactInfo;
 import com.project.publisherservice.domain.Publisher;
 import com.project.publisherservice.repository.PublisherRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-public class PublisherDataSeeder {
+@Slf4j
+public class PublisherInitialDataPopulate {
 
     @Bean
-    CommandLineRunner initDatabase(PublisherRepository publisherRepository) {
+    CommandLineRunner initPublisherData(PublisherRepository publisherRepository) {
         return args -> {
             Publisher publisher1 = new Publisher();
             publisher1.setName("TechBooks Publishing");
@@ -51,7 +53,7 @@ public class PublisherDataSeeder {
             publisherRepository.save(publisher1);
             publisherRepository.save(publisher2);
 
-            System.out.println("✅ Sample publishers data inserted successfully!");
+            log.info("Sample publishers data inserted successfully!");
         };
     }
 }

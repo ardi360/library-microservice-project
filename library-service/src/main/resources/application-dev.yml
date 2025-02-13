@@ -6,3 +6,9 @@ grpc:
     bookService:
       address: 'static://127.0.0.1:6285'
       negotiation-type: plaintext
+    authorService:
+      address: 'static://127.0.0.1:5265'
+      negotiation-type: plaintext
+    publisherService:
+      address: 'static://127.0.0.1:5275'
+      negotiation-type: plaintext
