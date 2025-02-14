@@ -1,12 +1,7 @@
 package com.project.libraryservice.service.impl;
 
-import com.project.libraryservice.payload.request.GetBookDetailRequest;
-import com.project.libraryservice.payload.request.GetBookRequest;
 import com.project.libraryservice.payload.request.NewBookRequest;
-import com.project.libraryservice.payload.response.BaseResponse;
-import com.project.libraryservice.payload.response.GetBookDetailResponse;
-import com.project.libraryservice.payload.response.GetBookResponse;
-import com.project.libraryservice.payload.response.ResultStatus;
+import com.project.libraryservice.payload.response.*;
 import com.project.libraryservice.service.GeneralLibraryService;
 import com.proto.author.AuthorResponse;
 import com.proto.author.AuthorServiceGrpc;
@@ -60,10 +55,10 @@ public class GeneralLibraryServiceImpl implements GeneralLibraryService {
     }
 
     @Override
-    public GetBookResponse getBook(GetBookRequest getBookRequest) {
+    public GetBookResponse getBook(String bookTitle) {
         com.proto.book.GetBookResponse bookFetchResponse = bookServiceBlockingStub.getBook(
                 com.proto.book.GetBookRequest.newBuilder()
-                        .setTitle(getBookRequest.getTitle())
+                        .setTitle(bookTitle)
                         .build()
         );
         return GetBookResponse.builder()
@@ -74,8 +69,31 @@ public class GeneralLibraryServiceImpl implements GeneralLibraryService {
     }
 
     @Override
-    public GetBookDetailResponse getBookDetail(GetBookDetailRequest getBookDetailRequest) {
-        com.proto.book.GetBookDetailResponse bookDetailResponse = bookServiceBlockingStub.getBookDetail(com.proto.book.GetBookDetailRequest.newBuilder().setBookId(getBookDetailRequest.getBookId()).build());
+    public GetBookDetailResponse getBookDetail(String bookId) {
+        com.proto.book.GetBookDetailResponse bookDetailRawResponse = bookServiceBlockingStub.getBookDetail(com.proto.book.GetBookDetailRequest.newBuilder().setBookId(bookId).build());
 
+        AuthorResponse author = bookDetailRawResponse.getAuthor();
+        PublisherResponse publisher = bookDetailRawResponse.getPublisher();
+
+        GetBookDetailResponse bookDetailResponse = GetBookDetailResponse.builder()
+                .bookId(bookId)
+                .title(bookDetailRawResponse.getBook().getTitle())
+                .description(bookDetailRawResponse.getBook().getDescription())
+                .pageNumbers(bookDetailRawResponse.getBook().getPageNumbers())
+                .coverType(bookDetailRawResponse.getBook().getCoverType())
+                .author(AuthorDetails.builder().firstName(author.getFirstName()).lastName(author.getLastName()).nsid(author.getNsid())
+                        .contactInfo(ContactInfo.builder().emails(author.getContactInfo().getEmailsList())
+                                .instagramAccounts(author.getContactInfo().getInstagramAccountsList())
+                                .phoneNumbers(author.getContactInfo().getPhoneNumbersList()).build())
+                        .build())
+                .publisher(PublisherDetails.builder().name(publisher.getName()).logoFileUrl(publisher.getLogoFileUrl())
+                        .addressInfo(AddressInfo.builder().address(publisher.getAddressInfo().getAddress()).lat(publisher.getAddressInfo().getLat()).lng(publisher.getAddressInfo().getLng()).build())
+                        .contactInfo(ContactInfo.builder().emails(publisher.getContactInfo().getEmailsList())
+                                .instagramAccounts(publisher.getContactInfo().getInstagramAccountsList())
+                                .phoneNumbers(publisher.getContactInfo().getPhoneNumbersList()).build())
+                        .build())
+                .build();
+
+        return bookDetailResponse;
     }
 }

@@ -1,11 +1,10 @@
 package com.project.libraryservice.controller;
 
-import com.project.libraryservice.payload.request.GetBookDetailRequest;
-import com.project.libraryservice.payload.request.GetBookRequest;
 import com.project.libraryservice.payload.request.NewBookRequest;
 import com.project.libraryservice.payload.response.BaseResponse;
 import com.project.libraryservice.payload.response.GetBookDetailResponse;
 import com.project.libraryservice.payload.response.GetBookResponse;
+import com.project.libraryservice.payload.response.ResultStatus;
 import com.project.libraryservice.service.GeneralLibraryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -28,15 +27,17 @@ public class LibraryGeneralController {
         return ResponseEntity.ok(newBookCreationResponse);
     }
 
-    @GetMapping(value = "/book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GetBookResponse> getBook(@RequestBody @Valid GetBookRequest getBookRequest) {
-        GetBookResponse getBookResponse = generalLibraryService.getBook(getBookRequest);
+    @GetMapping(value = "/book", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GetBookResponse> getBook(@RequestParam(name = "bookTitle") String bookTitle) {
+        GetBookResponse getBookResponse = generalLibraryService.getBook(bookTitle);
+        getBookResponse.setResultStatus(ResultStatus.SUCCESS);
         return ResponseEntity.ok(getBookResponse);
     }
 
-    @GetMapping(value = "/book-detail", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GetBookDetailResponse> getBookDetail(@RequestBody @Valid GetBookDetailRequest getBookDetailRequest) {
-        GetBookDetailResponse getBookDetailResponse = generalLibraryService.getBookDetail(getBookDetailRequest);
+    @GetMapping(value = "/book-detail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GetBookDetailResponse> getBookDetail(@RequestParam(name = "bookId") String bookId) {
+        GetBookDetailResponse getBookDetailResponse = generalLibraryService.getBookDetail(bookId);
+        getBookDetailResponse.setResultStatus(ResultStatus.SUCCESS);
         return ResponseEntity.ok(getBookDetailResponse);
     }
 

@@ -1,0 +1,282 @@
+{
+  "info": {
+    "_postman_id": "1366a514-5ab5-4180-85e7-fe96d17dd432",
+    "name": "golrang assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "create new book",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"requestNo\": 2,\r\n    \"title\": \"gorbe\",\r\n    \"description\": \"gorbe ketab\",\r\n    \"pageNumbers\": 10,\r\n    \"coverType\": \"SOFT\",\r\n    \"authorNsid\": \"52292850\",\r\n    \"publisherName\": \"Blick Group\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8015/api/v1/library/book",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8015",
+          "path": [
+            "api",
+            "v1",
+            "library",
+            "book"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "create new book",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"requestNo\": 2,\r\n    \"title\": \"shazade kocholo\",\r\n    \"description\": \"shazade ketab\",\r\n    \"pageNumbers\": 500,\r\n    \"coverType\": \"HARD\",\r\n    \"authorNsid\": \"52292850\",\r\n    \"publisherName\": \"Blick Group\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8015/api/v1/library/book",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8015",
+              "path": [
+                "api",
+                "v1",
+                "library",
+                "book"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 14 Feb 2025 21:46:56 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"resultStatus\": {\n        \"code\": \"000\",\n        \"description\": \"Successful Operation\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "get book",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8015/api/v1/library/book?bookTitle=gorbe",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8015",
+          "path": [
+            "api",
+            "v1",
+            "library",
+            "book"
+          ],
+          "query": [
+            {
+              "key": "bookTitle",
+              "value": "gorbe"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "get book",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8015/api/v1/library/book?bookTitle=gorbe",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8015",
+              "path": [
+                "api",
+                "v1",
+                "library",
+                "book"
+              ],
+              "query": [
+                {
+                  "key": "bookTitle",
+                  "value": "gorbe"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 14 Feb 2025 21:46:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"resultStatus\": {\n        \"code\": \"000\",\n        \"description\": \"Successful Operation\"\n    },\n    \"bookId\": \"0e973f8b-35be-4082-8945-32e72841af36\",\n    \"title\": \"gorbe\",\n    \"description\": \"gorbe ketab\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "get book detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8015/api/v1/library/book-detail?bookId=0e973f8b-35be-4082-8945-32e72841af36",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8015",
+          "path": [
+            "api",
+            "v1",
+            "library",
+            "book-detail"
+          ],
+          "query": [
+            {
+              "key": "bookId",
+              "value": "0e973f8b-35be-4082-8945-32e72841af36"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "get book detail",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8015/api/v1/library/book-detail?bookId=0e973f8b-35be-4082-8945-32e72841af36",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8015",
+              "path": [
+                "api",
+                "v1",
+                "library",
+                "book-detail"
+              ],
+              "query": [
+                {
+                  "key": "bookId",
+                  "value": "0e973f8b-35be-4082-8945-32e72841af36"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 14 Feb 2025 21:45:02 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"resultStatus\": {\n        \"code\": \"000\",\n        \"description\": \"Successful Operation\"\n    },\n    \"bookId\": \"0e973f8b-35be-4082-8945-32e72841af36\",\n    \"title\": \"gorbe\",\n    \"description\": \"gorbe ketab\",\n    \"pageNumbers\": 10,\n    \"coverType\": \"SOFT\",\n    \"author\": {\n        \"firstName\": \"Brent\",\n        \"lastName\": \"Lockman\",\n        \"nsid\": \"52292850\",\n        \"contactInfo\": {\n            \"emails\": [\n                \"gilberte.rodriguez@gmail.com\",\n                \"jerry.monahan@gmail.com\"\n            ],\n            \"phoneNumbers\": [\n                \"(303) 912-3322\",\n                \"(937) 972-8824\"\n            ],\n            \"instagramAccounts\": [\n                \"ahmed.gislason\",\n                \"herb.lind\"\n            ]\n        }\n    },\n    \"publisher\": {\n        \"name\": \"Blick Group\",\n        \"logoFileUrl\": \"http://www.arletta-marvin.com/maiores/explicabo#veniam\",\n        \"addressInfo\": {\n            \"address\": \"65878 Johnston Ford, East Carltonchester, IN 23275\",\n            \"lat\": -69.43627067,\n            \"lng\": 133.01884245\n        },\n        \"contactInfo\": {\n            \"emails\": [\n                \"claretta.hamill@yahoo.com\",\n                \"darron.feest@yahoo.com\"\n            ],\n            \"phoneNumbers\": [\n                \"(305) 270-1567\",\n                \"(727) 591-8100\"\n            ],\n            \"instagramAccounts\": [\n                \"josefine.steuber\",\n                \"thanh.ziemann\"\n            ]\n        }\n    }\n}"
+        }
+      ]
+    }
+  ]
+}

@@ -36,10 +36,6 @@ public class AuthorServiceImpl extends AuthorServiceGrpc.AuthorServiceImplBase {
                             .addAllPhoneNumbers(author.getContactInfo().getPhoneNumbers())
                             .addAllInstagramAccounts(author.getContactInfo().getInstagramAccounts())
                             .build())
-                    .setCreatedAt(author.getCreatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
-                    .setUpdatedAt(author.getUpdatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
-                    .setDeletedAt(author.getDeletedAt() != null ?
-                            author.getDeletedAt().format(DateTimeFormatter.ISO_DATE_TIME) : null)
                     .build();
 
             responseObserver.onNext(response);

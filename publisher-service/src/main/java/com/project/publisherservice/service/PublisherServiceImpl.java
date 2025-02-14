@@ -7,7 +7,6 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,10 +38,6 @@ public class PublisherServiceImpl extends PublisherServiceGrpc.PublisherServiceI
                             .addAllPhoneNumbers(publisher.getContactInfo().getPhoneNumbers())
                             .addAllInstagramAccounts(publisher.getContactInfo().getInstagramAccounts())
                             .build())
-                    .setCreatedAt(publisher.getCreatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
-                    .setUpdatedAt(publisher.getUpdatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
-                    .setDeletedAt(publisher.getDeletedAt() != null ?
-                            publisher.getDeletedAt().format(DateTimeFormatter.ISO_DATE_TIME) : null)
                     .build();
 
             responseObserver.onNext(response);
