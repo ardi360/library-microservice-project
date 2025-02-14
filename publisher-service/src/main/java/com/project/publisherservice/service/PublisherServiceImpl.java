@@ -18,7 +18,7 @@ public class PublisherServiceImpl extends PublisherServiceGrpc.PublisherServiceI
     private final PublisherRepository publisherRepository;
 
     @Override
-    public void getPublisher(PublisherRequest request, StreamObserver<PublisherResponse> responseObserver) {
+    public void getPublisherById(GetPublisherByIdRequest request, StreamObserver<PublisherResponse> responseObserver) {
         UUID publisherId = UUID.fromString(request.getPublisherId());
         Optional<Publisher> publisherOptional = publisherRepository.findById(publisherId);
 
@@ -51,4 +51,24 @@ public class PublisherServiceImpl extends PublisherServiceGrpc.PublisherServiceI
             responseObserver.onError(new RuntimeException("Publisher not found"));
         }
     }
+
+    @Override
+    public void getPublisherIdByName(GetPublisherIdByNameRequest request, StreamObserver<PublisherResponse> responseObserver) {
+        String publisherName = request.getName();
+        Optional<Publisher> publisherByIdOptional = publisherRepository.findByName(publisherName);
+
+        if (publisherByIdOptional.isPresent()) {
+            Publisher publisher = publisherByIdOptional.get();
+
+            PublisherResponse response = PublisherResponse.newBuilder()
+                    .setId(publisher.getId().toString())
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } else {
+            responseObserver.onError(new RuntimeException("Publisher not found"));
+        }
+    }
+
 }

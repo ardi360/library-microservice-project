@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CoverType {
-    HARD("Hard"),
-    SOFT("Soft");
+    HARD("HARD"),
+    SOFT("SOFT");
 
     private final String value;
 }

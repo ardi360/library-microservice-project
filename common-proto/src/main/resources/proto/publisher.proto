@@ -8,14 +8,14 @@ option java_outer_classname = "PublisherProto";
 
 service PublisherService {
   rpc GetPublisherById (GetPublisherByIdRequest) returns (PublisherResponse);
-  rpc GetPublisherByName (GetPublisherByNameRequest) returns (PublisherResponse);
+  rpc GetPublisherIdByName (GetPublisherIdByNameRequest) returns (PublisherResponse);
 }
 
 message GetPublisherByIdRequest {
   string publisher_id = 1;
 }
 
-message GetPublisherByNameRequest {
+message GetPublisherIdByNameRequest {
   string name = 1;
 }
 

@@ -8,14 +8,14 @@ option java_outer_classname = "AuthorProto";
 
 service AuthorService {
   rpc GetAuthorById (GetAuthorByIdRequest) returns (AuthorResponse);
-  rpc GetAuthorByNsid (GetAuthorByNsidRequest) returns (AuthorResponse);
+  rpc GetAuthorIdByNsid (GetAuthorIdByNsidRequest) returns (AuthorResponse);
 }
 
 message GetAuthorByIdRequest {
   string author_id = 1;
 }
 
-message GetAuthorByNsidRequest {
+message GetAuthorIdByNsidRequest {
   string nsid = 1;
 }
 

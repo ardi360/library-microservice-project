@@ -1,26 +1,57 @@
 package com.project.libraryservice.service.impl;
 
-import com.project.libraryservice.client.AuthorClient;
-import com.project.libraryservice.client.BookClient;
-import com.project.libraryservice.client.PublisherClient;
 import com.project.libraryservice.payload.request.NewBookRequest;
 import com.project.libraryservice.payload.response.BaseResponse;
+import com.project.libraryservice.payload.response.ResultStatus;
 import com.project.libraryservice.service.GeneralLibraryService;
+import com.proto.author.AuthorResponse;
+import com.proto.author.AuthorServiceGrpc;
+import com.proto.author.GetAuthorIdByNsidRequest;
+import com.proto.book.BookServiceGrpc;
+import com.proto.book.CreateNewBookRequest;
+import com.proto.book.CreateNewBookResponse;
+import com.proto.publisher.GetPublisherIdByNameRequest;
+import com.proto.publisher.PublisherResponse;
+import com.proto.publisher.PublisherServiceGrpc;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class GeneralLibraryServiceImpl implements GeneralLibraryService {
 
-    private final BookClient bookClient;
+    @GrpcClient("authorService")
+    private AuthorServiceGrpc.AuthorServiceBlockingStub authorServiceBlockingStub;
 
-    private final AuthorClient authorClient;
+    @GrpcClient("publisherService")
+    private PublisherServiceGrpc.PublisherServiceBlockingStub publisherServiceBlockingStub;
 
-    private final PublisherClient publisherClient;
+    @GrpcClient("bookService")
+    private BookServiceGrpc.BookServiceBlockingStub bookServiceBlockingStub;
+
 
     @Override
     public BaseResponse createNewBook(NewBookRequest newBookRequest) {
-        return null;
+        AuthorResponse authorByNsid = authorServiceBlockingStub.getAuthorIdByNsid(
+                GetAuthorIdByNsidRequest.newBuilder()
+                        .setNsid(newBookRequest.getAuthorNsid())
+                        .build());
+        PublisherResponse publisherByName = publisherServiceBlockingStub.getPublisherIdByName(
+                GetPublisherIdByNameRequest.newBuilder()
+                        .setName(newBookRequest.getPublisherName())
+                        .build());
+        CreateNewBookResponse newBookCreationResponse = bookServiceBlockingStub.createNewBook(
+                CreateNewBookRequest.newBuilder()
+                        .setTitle(newBookRequest.getTitle())
+                        .setDescription(newBookRequest.getDescription())
+                        .setPageNumbers(newBookRequest.getPageNumbers())
+                        .setCoverType(newBookRequest.getCoverType().getValue())
+                        .setAuthorId(authorByNsid.getId())
+                        .setPublicationId(publisherByName.getId())
+                        .build());
+        return BaseResponse.builder()
+                .resultStatus(newBookCreationResponse.getStatus().equals(CreateNewBookResponse.Status.SUCCESS) ? ResultStatus.SUCCESS : ResultStatus.FAILURE)
+                .build();
     }
 }
