@@ -1,7 +1,9 @@
 package com.project.libraryservice.service.impl;
 
+import com.project.libraryservice.payload.request.GetBookRequest;
 import com.project.libraryservice.payload.request.NewBookRequest;
 import com.project.libraryservice.payload.response.BaseResponse;
+import com.project.libraryservice.payload.response.GetBookResponse;
 import com.project.libraryservice.payload.response.ResultStatus;
 import com.project.libraryservice.service.GeneralLibraryService;
 import com.proto.author.AuthorResponse;
@@ -52,6 +54,20 @@ public class GeneralLibraryServiceImpl implements GeneralLibraryService {
                         .build());
         return BaseResponse.builder()
                 .resultStatus(newBookCreationResponse.getStatus().equals(CreateNewBookResponse.Status.SUCCESS) ? ResultStatus.SUCCESS : ResultStatus.FAILURE)
+                .build();
+    }
+
+    @Override
+    public GetBookResponse getBook(GetBookRequest getBookRequest) {
+        com.proto.book.GetBookResponse bookFetchResponse = bookServiceBlockingStub.getBook(
+                com.proto.book.GetBookRequest.newBuilder()
+                        .setTitle(getBookRequest.getTitle())
+                        .build()
+        );
+        return GetBookResponse.builder()
+                .bookId(bookFetchResponse.getId())
+                .title(bookFetchResponse.getTitle())
+                .description(bookFetchResponse.getDescription())
                 .build();
     }
 }

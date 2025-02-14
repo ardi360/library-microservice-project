@@ -4,15 +4,14 @@ import com.project.bookservice.domain.Book;
 import com.project.bookservice.domain.CoverType;
 import com.project.bookservice.repository.BookRepository;
 import com.proto.author.AuthorServiceGrpc;
-import com.proto.book.BookServiceGrpc;
-import com.proto.book.CreateNewBookRequest;
-import com.proto.book.CreateNewBookResponse;
+import com.proto.book.*;
 import com.proto.publisher.PublisherServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @GrpcService
@@ -43,6 +42,26 @@ public class BookServiceImpl extends BookServiceGrpc.BookServiceImplBase {
             responseObserver.onCompleted();
         } catch (Exception exception) {
             responseObserver.onError(new RuntimeException("an Error Occurred During save the entity"));
+        }
+    }
+
+    @Override
+    public void getBook(GetBookRequest request, StreamObserver<GetBookResponse> responseObserver) {
+        Optional<Book> bookByTitleIdOptional = bookRepository.findByTitle(request.getTitle());
+
+        if (bookByTitleIdOptional.isPresent()) {
+            Book book = bookByTitleIdOptional.get();
+
+            GetBookResponse response = GetBookResponse.newBuilder()
+                    .setId(book.getId().toString())
+                    .setTitle(book.getTitle())
+                    .setDescription(book.getDescription())
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } else {
+            responseObserver.onError(new RuntimeException("Book not found"));
         }
     }
 }
