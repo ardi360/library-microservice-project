@@ -6,9 +6,14 @@ option java_multiple_files = true;
 option java_package = "com.proto.book";
 option java_outer_classname = "BookProto";
 
+import "author.proto";
+import "publisher.proto";
+
 service BookService {
   rpc CreateNewBook (CreateNewBookRequest) returns (CreateNewBookResponse);
   rpc GetBook (GetBookRequest) returns (GetBookResponse);
+  rpc GetBookDetail (GetBookDetailRequest) returns (GetBookDetailResponse); // New RPC method
+
 }
 
 message CreateNewBookRequest {
@@ -36,4 +41,25 @@ message GetBookResponse {
   string id = 1;
   string title = 2;
   string description = 3;
+}
+
+message GetBookDetailRequest {
+  string book_id = 1;
+}
+
+message GetBookDetailResponse {
+  message Book {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    int32 page_numbers = 4;
+    string cover_type = 5;
+    string author_id = 6;
+    string publication_id = 7;
+  }
+
+  Book book = 1;
+
+  author.AuthorResponse author = 2;
+  publisher.PublisherResponse publisher = 3;
 }

@@ -1,8 +1,10 @@
 package com.project.libraryservice.controller;
 
+import com.project.libraryservice.payload.request.GetBookDetailRequest;
 import com.project.libraryservice.payload.request.GetBookRequest;
 import com.project.libraryservice.payload.request.NewBookRequest;
 import com.project.libraryservice.payload.response.BaseResponse;
+import com.project.libraryservice.payload.response.GetBookDetailResponse;
 import com.project.libraryservice.payload.response.GetBookResponse;
 import com.project.libraryservice.service.GeneralLibraryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,9 +35,9 @@ public class LibraryGeneralController {
     }
 
     @GetMapping(value = "/book-detail", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> getBookDetail(@RequestBody @Valid NewBookRequest newBookRequest) {
-        BaseResponse newBookCreationResponse = generalLibraryService.createNewBook(newBookRequest);
-        return ResponseEntity.ok(newBookCreationResponse);
+    public ResponseEntity<GetBookDetailResponse> getBookDetail(@RequestBody @Valid GetBookDetailRequest getBookDetailRequest) {
+        GetBookDetailResponse getBookDetailResponse = generalLibraryService.getBookDetail(getBookDetailRequest);
+        return ResponseEntity.ok(getBookDetailResponse);
     }
 
 }
