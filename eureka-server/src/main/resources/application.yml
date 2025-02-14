@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: ${project.artifactId}
-  profiles:
-    active: dev
-  #    don't want to use optional:configserver:http://localhost:8090 , if config server is not up, application boot must be prevented
-  #  also , it's possible to use import: configserver:${CONFIG_SERVER_URL}:{CONFIG_SERVER_PORT} and pass them as environment variable in runtime
-  config:
-    import: optional:configserver:http://localhost:8090
