@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/library")
@@ -26,5 +23,18 @@ public class LibraryGeneralController {
         BaseResponse newBookCreationResponse = generalLibraryService.createNewBook(newBookRequest);
         return ResponseEntity.ok(newBookCreationResponse);
     }
+
+    @GetMapping(value = "/book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> getBook(@RequestBody @Valid NewBookRequest newBookRequest) {
+        BaseResponse newBookCreationResponse = generalLibraryService.createNewBook(newBookRequest);
+        return ResponseEntity.ok(newBookCreationResponse);
+    }
+
+    @GetMapping(value = "/book-detail", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> getBookDetail(@RequestBody @Valid NewBookRequest newBookRequest) {
+        BaseResponse newBookCreationResponse = generalLibraryService.createNewBook(newBookRequest);
+        return ResponseEntity.ok(newBookCreationResponse);
+    }
+
 }
 

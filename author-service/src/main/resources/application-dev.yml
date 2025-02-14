@@ -12,3 +12,5 @@ spring:
       password: admin
       authentication-database: admin
       auto-index-creation: true
+
+recordsPopulationCount: 3
