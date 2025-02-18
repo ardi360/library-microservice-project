@@ -22,20 +22,20 @@ public class LibraryGeneralController {
     private final GeneralLibraryService generalLibraryService;
 
     @PostMapping(value = "/book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> createNewBook(@RequestHeader(name = "requestNo") String requestNo, @RequestBody @Valid NewBookRequest newBookRequest) {
+    public ResponseEntity<BaseResponse> createNewBook(@RequestBody @Valid NewBookRequest newBookRequest) {
         BaseResponse newBookCreationResponse = generalLibraryService.createNewBook(newBookRequest);
         return ResponseEntity.ok(newBookCreationResponse);
     }
 
     @GetMapping(value = "/book", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GetBookResponse> getBook(@RequestHeader(name = "requestNo") String requestNo, @RequestParam(name = "bookTitle") String bookTitle) {
+    public ResponseEntity<GetBookResponse> getBook(@RequestParam(name = "bookTitle") String bookTitle) {
         GetBookResponse getBookResponse = generalLibraryService.getBook(bookTitle);
         getBookResponse.setResultStatus(ResultStatus.SUCCESS);
         return ResponseEntity.ok(getBookResponse);
     }
 
     @GetMapping(value = "/book-detail", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GetBookDetailResponse> getBookDetail(@RequestHeader(name = "requestNo") String requestNo, @RequestParam(name = "bookId") String bookId) {
+    public ResponseEntity<GetBookDetailResponse> getBookDetail(@RequestParam(name = "bookId") String bookId) {
         GetBookDetailResponse getBookDetailResponse = generalLibraryService.getBookDetail(bookId);
         getBookDetailResponse.setResultStatus(ResultStatus.SUCCESS);
         return ResponseEntity.ok(getBookDetailResponse);

@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,14 +15,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionHandlerControllerAdvice {
-
-    @ResponseBody
-    @ExceptionHandler(MissingRequestHeaderException.class)
-    public ResponseEntity<BaseResponse> MissingRequestHeaderExceptionHandler(MissingRequestHeaderException missingRequestHeaderException) {
-        String exceptionMessage = missingRequestHeaderException.getMessage();
-        log.error("MissingRequestHeaderExceptionHandler Exception Raised and Caught By ExceptionHandlerControllerAdvice: " + exceptionMessage);
-        return ResponseEntity.badRequest().body(BaseResponse.builder().resultStatus(ResultStatus.BAD_INPUT).furtherDescription(exceptionMessage).build());
-    }
 
     @ResponseBody
     @ExceptionHandler(IllegalArgumentException.class)
