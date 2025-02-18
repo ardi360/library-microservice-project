@@ -3,6 +3,16 @@ spring:
     name: ${project.artifactId}
   profiles:
     active: dev
+  jackson:
+    default-property-inclusion: non_null
+  messages:
+    basename: messages/messages
+    cache-duration: 3600
+    encoding: UTF-8
+    fallback-to-system-locale: false
+  web:
+    locale: en
+    locale-resolver: accept_header
 
 springdoc:
   api-docs:

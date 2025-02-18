@@ -1,7 +1,6 @@
 package com.project.libraryservice.aspect;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import com.project.libraryservice.payload.request.BaseRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,17 +22,12 @@ public class LoggingAspect {
 
     private final Cache<String, Set<Integer>> requestIdCache;
 
-    @Around("execution(* com.project.libraryservice.controller..*(..))")
+    @Around("@within(org.springframework.web.bind.annotation.RestController)")
     public Object logRequestsAndResponses(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName = joinPoint.getSignature().toShortString();
         Object[] args = joinPoint.getArgs();
 
         log.info("Incoming request: {} with args: {}", methodName, Arrays.toString(args));
-
-        Integer requestId = extractRequestId(args);
-        if (requestId != null) {
-            ensureUniqueRequestId(requestId);
-        }
 
         Object result;
         try {
@@ -51,15 +45,6 @@ public class LoggingAspect {
         }
 
         return result;
-    }
-
-    private Integer extractRequestId(Object[] args) {
-        for (Object arg : args) {
-            if (arg instanceof BaseRequest baseRequest) {
-                return baseRequest.getRequestNo();
-            }
-        }
-        return null;
     }
 
     private void ensureUniqueRequestId(int requestId) {

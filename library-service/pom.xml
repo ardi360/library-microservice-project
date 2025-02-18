@@ -98,7 +98,15 @@
                 </includes>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering> <!-- Don't filter these files -->
+            </resource>
         </resources>
+
     </build>
 
 </project>
